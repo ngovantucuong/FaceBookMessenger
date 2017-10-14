@@ -13,7 +13,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    static var managerObjectContext: NSManagedObjectContext?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let layout = UICollectionViewFlowLayout()
         let friendsController = FriendsController(collectionViewLayout: layout)
         window?.rootViewController = UINavigationController(rootViewController: friendsController)
+        
+        AppDelegate.managerObjectContext = persistentContainer.viewContext
         
         return true
     }
