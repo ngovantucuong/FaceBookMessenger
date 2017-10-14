@@ -19,9 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        let layout = UICollectionViewFlowLayout()
-        let friendsController = FriendsController(collectionViewLayout: layout)
-        window?.rootViewController = UINavigationController(rootViewController: friendsController)
+    
+        window?.rootViewController = CustomTarBarController()
         
         AppDelegate.managerObjectContext = persistentContainer.viewContext
         

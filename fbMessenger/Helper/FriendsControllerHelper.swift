@@ -28,6 +28,23 @@ extension FriendsController {
         createMessageWithText(text: "Hello, How are you", friend: steve, minutesAgo: 1, context: AppDelegate.managerObjectContext!)
         createMessageWithText(text: "Are you interested in buying an Apple device", friend: steve, minutesAgo: 0, context: AppDelegate.managerObjectContext!)
         
+        let donal = NSEntityDescription.insertNewObject(forEntityName: "Friend", into: AppDelegate.managerObjectContext!) as? FriendMO
+        donal?.name = "Donal Trumn"
+        donal?.profileImageName = "donald_trump_profile"
+        createMessageWithText(text: "You're are fire", friend: donal!, minutesAgo: 5, context: AppDelegate.managerObjectContext!)
+        
+        let gandhi = NSEntityDescription.insertNewObject(forEntityName: "Friend", into: AppDelegate.managerObjectContext!) as? FriendMO
+        gandhi?.name = "Mahatma Gandhi"
+        gandhi?.profileImageName = "gandhi"
+        
+        createMessageWithText(text: "Love, Peace, and Joy", friend: gandhi!, minutesAgo: 60 * 24, context: AppDelegate.managerObjectContext!)
+        
+        let hilary = NSEntityDescription.insertNewObject(forEntityName: "Friend", into: AppDelegate.managerObjectContext!) as? FriendMO
+        hilary?.name = "Hilary Briton"
+        hilary?.profileImageName = "hillary_profile"
+        
+        createMessageWithText(text: "hello world, Please vote for me!!", friend: hilary!, minutesAgo: 8 * 60 * 24 , context: AppDelegate.managerObjectContext!)
+        
         loadData()
     }
     
@@ -35,7 +52,7 @@ extension FriendsController {
         let message = NSEntityDescription.insertNewObject(forEntityName: "Message", into: context) as! MessageMO
         message.friends = friend
         message.text = text
-        message.date = NSDate().addingTimeInterval(minutesAgo * 60)
+        message.date = NSDate().addingTimeInterval(-minutesAgo * 60)
     }
     
     func loadData() {
