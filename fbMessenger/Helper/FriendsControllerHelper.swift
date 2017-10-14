@@ -24,22 +24,44 @@ extension FriendsController {
         steve.name = "Steve Jobs"
         steve.profileImageName = "steve_profile"
         
-        let messageSteve = NSEntityDescription.insertNewObject(forEntityName: "Message", into: AppDelegate.managerObjectContext!) as! MessageMO
-        messageSteve.friends = steve
-        messageSteve.text = "Apple cretes great IOS device for..."
-        messageSteve.date = NSDate()
+        createMessageWithText(text: "Good morning...", friend: steve, minutesAgo: 2, context: AppDelegate.managerObjectContext!)
+        createMessageWithText(text: "Hello, How are you", friend: steve, minutesAgo: 1, context: AppDelegate.managerObjectContext!)
+        createMessageWithText(text: "Are you interested in buying an Apple device", friend: steve, minutesAgo: 0, context: AppDelegate.managerObjectContext!)
         
         loadData()
     }
     
+    private func createMessageWithText(text: String, friend: FriendMO, minutesAgo: Double, context: NSManagedObjectContext) {
+        let message = NSEntityDescription.insertNewObject(forEntityName: "Message", into: context) as! MessageMO
+        message.friends = friend
+        message.text = text
+        message.date = NSDate().addingTimeInterval(minutesAgo * 60)
+    }
+    
     func loadData() {
        let context = AppDelegate.managerObjectContext!
-        do {
-            let result = try context.fetch(MessageMO.fetchRequest()) as! [MessageMO]
-            messages = result
-        } catch let err {
-            print(err)
+        
+        if let friends = fetchFriends() {
+            var message = [MessageMO]()
+            
+            for friend in friends {
+                
+                let fetchRequestMessage = NSFetchRequest<MessageMO>(entityName: "Message")
+                fetchRequestMessage.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+                fetchRequestMessage.predicate = NSPredicate(format: "friends.name = %@", friend.name!)
+                fetchRequestMessage.fetchLimit = 1
+                
+                do {
+                    let result = try context.fetch(fetchRequestMessage)
+                    message.append(contentsOf: result)
+                } catch let err {
+                    print(err)
+                }
+            }
+            messages = message.sorted(by: {$0.date!.compare($1.date! as Date) == .orderedDescending})
         }
+        
+        
     }
     
     func clearData() {
@@ -55,5 +77,15 @@ extension FriendsController {
         } catch let err {
             print(err)
         }
+    }
+    
+    private func fetchFriends() -> [FriendMO]? {
+        let context = AppDelegate.managerObjectContext
+        do {
+            return try context?.fetch(FriendMO.fetchRequest()) as? [FriendMO]
+        } catch let err {
+            print(err)
+        }
+        return nil
     }
 }
