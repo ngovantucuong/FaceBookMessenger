@@ -2,7 +2,7 @@
 //  MessageMO+CoreDataProperties.swift
 //  fbMessenger
 //
-//  Created by ngovantucuong on 10/14/17.
+//  Created by ngovantucuong on 10/15/17.
 //  Copyright © 2017 apple. All rights reserved.
 //
 //
@@ -19,6 +19,7 @@ extension MessageMO {
 
     @NSManaged public var date: NSDate?
     @NSManaged public var text: String?
+    @NSManaged public var isSender: Bool
     @NSManaged public var friends: FriendMO?
 
 }
