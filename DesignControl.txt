@@ -10,3 +10,4 @@ http://ashishkakkad.com/2015/09/create-your-own-slider-menu-drawer-in-swift/
 collectionview:
 http://zappdesigntemplates.com/collectionview-flow-layout-from-grid-to-list-layout/
 http://rshankar.com/uicollectionview-demo-in-swift/
+https://coderwall.com/p/dyqrfa/customize-navigation-bar-appearance-with-swift
