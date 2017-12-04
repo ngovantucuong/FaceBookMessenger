@@ -25,3 +25,6 @@ combobox:
 https://stackoverflow.com/questions/32427823/combobox-component-for-swift-failed-with-downpicker
 https://www.credera.com/blog/custom-application-development/creating-a-dropdown-field-in-swift-for-ios/
 https://stackoverflow.com/questions/44615604/how-to-make-a-drop-down-menu-in-swift-3
+oad view from xib file:
+https://stackoverflow.com/questions/25513271/how-to-initialize-instantiate-a-custom-uiview-class-with-a-xib-file-in-swift
+https://stackoverflow.com/questions/35659714/loading-a-xib-file-to-a-uiview-swift
