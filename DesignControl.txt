@@ -29,3 +29,8 @@ oad view from xib file:
 https://stackoverflow.com/questions/25513271/how-to-initialize-instantiate-a-custom-uiview-class-with-a-xib-file-in-swift
 https://stackoverflow.com/questions/35659714/loading-a-xib-file-to-a-uiview-swift
 https://github.com/HacktechSolutions/Swift3.0-Dropdown-Menu
+tabbar:
+https://stackoverflow.com/questions/45079293/how-to-show-tab-bar-in-all-view-controllers-using-swift-3-programmatically
+https://stackoverflow.com/questions/26780719/hide-tab-bar-in-view-with-push
+https://stackoverflow.com/questions/36899671/tabbar-disappear-after-push-segue
+https://stackoverflow.com/questions/45424253/tab-bar-disappears-after-segue-is-performed?rq=1
