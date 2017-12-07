@@ -50,3 +50,6 @@ https://stackoverflow.com/questions/26047013/delete-data-from-coredata-swift
 uisearchController:
 https://spin.atomicobject.com/2016/11/14/uisearchcontroller-add-search-uitableviews/
 https://stackoverflow.com/questions/29664315/how-to-implement-uisearchcontroller-in-uitableview-swift
+core data:
+https://cocoacasts.com/working-with-managed-objects-in-core-data/
+https://cocoacasts.com/an-introductory-core-data-tutorial
