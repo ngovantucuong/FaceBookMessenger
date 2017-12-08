@@ -1,0 +1,93 @@
+appdelegate:
+
+static var managerObjectContext: NSManagedObjectContext?
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+    
+        window?.rootViewController = CustomTarBarController()
+        
+        AppDelegate.managerObjectContext = persistentContainer.viewContext
+        
+        return true
+    }
+
+@objc func handleSend() {
+        let context = AppDelegate.managerObjectContext
+        
+        FriendsController.createMessageWithText(text: inputTextField.text!, friend: friends!, minutesAgo: 0, context: context!, isSender: true)
+        
+        do {
+            try context?.save()
+            
+//            messages?.append(message)
+//            let insertionIndexpath = (messages?.count)! - 1
+//            let indexpath = NSIndexPath(item: insertionIndexpath, section: 0)
+//            collectionView?.insertItems(at: [indexpath as IndexPath])
+//            collectionView?.scrollToItem(at: indexpath as IndexPath, at: .bottom, animated: true)
+            inputTextField.text = nil
+        } catch let err {
+            print(err)
+        }
+    }
+
+static func createMessageWithText(text: String, friend: FriendMO, minutesAgo: Double, context: NSManagedObjectContext, isSender: Bool = false) {
+        let message = NSEntityDescription.insertNewObject(forEntityName: "Message", into: context) as! MessageMO
+        message.friends = friend
+        message.text = text
+        message.date = NSDate().addingTimeInterval(-minutesAgo * 60)
+        message.isSender = isSender
+    }
+    
+    func loadData() {
+       let context = AppDelegate.managerObjectContext!
+        
+        if let friends = fetchFriends() {
+            var message = [MessageMO]()
+            
+            for friend in friends {
+                
+                let fetchRequestMessage = NSFetchRequest<MessageMO>(entityName: "Message")
+                fetchRequestMessage.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+                fetchRequestMessage.predicate = NSPredicate(format: "friends.name = %@", friend.name!)
+                fetchRequestMessage.fetchLimit = 1
+                
+                do {
+                    let result = try context.fetch(fetchRequestMessage)
+                    message.append(contentsOf: result)
+                } catch let err {
+                    print(err)
+                }
+            }
+            messages = message.sorted(by: {$0.date!.compare($1.date! as Date) == .orderedDescending})
+        }
+        
+        
+    }
+    
+    func clearData() {
+        let context = AppDelegate.managerObjectContext!
+        do {
+            let messages = try context.fetch(MessageMO.fetchRequest()) as! [MessageMO]
+            for message in messages {
+                context.delete(message)
+            }
+            
+            try context.save()
+            
+        } catch let err {
+            print(err)
+        }
+    }
+    
+    private func fetchFriends() -> [FriendMO]? {
+        let context = AppDelegate.managerObjectContext
+        do {
+            return try context?.fetch(FriendMO.fetchRequest()) as? [FriendMO]
+        } catch let err {
+            print(err)
+        }
+        return nil
+    }
